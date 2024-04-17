@@ -15,9 +15,10 @@ public class JokeQueryService {
         restTemplate = restTemplateBuilder.build();
     }
 
-    public static final String ENDPOINT = "";
+    public static final String ENDPOINT = "https://v2.jokeapi.dev/joke/{category}?type=single&amount={numJokes}";
 
     public String getJSON(String category, int numJokes) throws HttpClientErrorException {
         return "";
     }
 }
+
