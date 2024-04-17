@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 
 @Slf4j
 @Service
+
 public class ZipCodeQueryService {
 
     ObjectMapper mapper = new ObjectMapper();
