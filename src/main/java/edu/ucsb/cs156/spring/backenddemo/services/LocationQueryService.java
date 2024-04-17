@@ -28,20 +28,14 @@ public class LocationQueryService {
         restTemplate = restTemplateBuilder.build();
     }
 
-    public static final String ENDPOINT = "https://nominatim.openstreetmap.org/search/search.php?q={location}&format=jsonv2";
+    public static final String ENDPOINT = "https://nominatim.openstreetmap.org/search.php?q={location}&format=jsonv2";
 
     public String getJSON(String location) throws HttpClientErrorException {
         Map<String, String> uriVariables = Map.of("location", location);
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(List.of(MediaType.TEXT_PLAIN));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
-
         ResponseEntity<String> re = restTemplate.exchange(ENDPOINT, HttpMethod.GET, entity, String.class, uriVariables);
-        String csvData =  re.getBody();
-        // List<CollegeSubreddit> subreddits = new CsvToBeanBuilder<CollegeSubreddit>(new StringReader(csvData)).withType(CollegeSubreddit.class).build().parse();
-        // String jsonData = mapper.writeValueAsString(subreddits);
-        return "";
+        return re.getBody();
     }
 }
