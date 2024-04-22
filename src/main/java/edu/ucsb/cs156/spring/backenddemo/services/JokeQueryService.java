@@ -30,16 +30,16 @@ public class JokeQueryService {
         restTemplate = restTemplateBuilder.build();
     }
 
-    public static final String ENDPOINT = "https://v2.jokeapi.dev/joke/{category}?type=single&amount={numJokes}";
+    public static final String ENDPOINT = "https://v2.jokeapi.dev/joke/{category}?numJokes={numJokes}";
 
-    public String getJSON(String category, int numJokes) throws HttpClientErrorException {
+    public String getJSON(String category, String numJokes) throws HttpClientErrorException {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        Map<String, String> uriVariables = Map.of("category", category, "numJokes", Integer.toString(numJokes));
+        Map<String, String> uriVariables = Map.of("category", category, "numJokes", (numJokes));
 
         ResponseEntity<String> re = restTemplate.exchange(ENDPOINT, HttpMethod.GET, entity, String.class,
                 uriVariables);
