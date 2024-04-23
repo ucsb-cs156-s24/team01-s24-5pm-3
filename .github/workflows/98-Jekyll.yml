@@ -46,8 +46,8 @@ jobs:
         uses: actions/configure-pages@v2
       - name: Fix dependencies
         run: |
-          echo "source \"https://rubygems.org\"\ngem \"jekyll\"\ngem \"minima\"" > Gemfile
-          echo "---\ntitle: Index\n---" > idxTemp
+          echo $'source \"https://rubygems.org\"\ngem \"jekyll\"\ngem \"minima\"'' > Gemfile
+          echo $'---\ntitle: Index\n---' > idxTemp
           cat idxTemp index.md > _index.md
           mv _index.md index.md
           gem install jekyll
