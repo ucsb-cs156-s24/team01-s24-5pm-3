@@ -44,6 +44,11 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v2
+      - name: Fix dependencies
+        run: |
+          echo "source \"https://rubygems.org\"\ngem \"jekyll\"\ngem \"minima\"" > Gemfile
+          echo "---\ntitle: Index\n---" > idxTemp
+          cat idxTemp index.md > index.md
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
