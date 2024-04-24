@@ -4,6 +4,21 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
 
 
 @Service
@@ -11,14 +26,24 @@ public class JokeQueryService {
 
     private final RestTemplate restTemplate;
 
-<span class="fc" id="L14">    public JokeQueryService(RestTemplateBuilder restTemplateBuilder) {</span>
-<span class="fc" id="L15">        restTemplate = restTemplateBuilder.build();</span>
-<span class="fc" id="L16">    }</span>
+<span class="fc" id="L29">    public JokeQueryService(RestTemplateBuilder restTemplateBuilder) {</span>
+<span class="fc" id="L30">        restTemplate = restTemplateBuilder.build();</span>
+<span class="fc" id="L31">    }</span>
 
-    public static final String ENDPOINT = &quot;&quot;;
+    public static final String ENDPOINT = &quot;https://v2.jokeapi.dev/joke/{category}?numJokes={numJokes}&quot;;
 
-    public String getJSON(String category, int numJokes) throws HttpClientErrorException {
-<span class="nc" id="L21">        return &quot;&quot;;</span>
-    }
+    public String getJSON(String category, String numJokes) throws HttpClientErrorException {
+<span class="fc" id="L36">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="fc" id="L37">        headers.setAccept(List.of(MediaType.APPLICATION_JSON));</span>
+<span class="fc" id="L38">        headers.setContentType(MediaType.APPLICATION_JSON);</span>
+
+<span class="fc" id="L40">        HttpEntity&lt;String&gt; entity = new HttpEntity&lt;&gt;(headers);</span>
+
+<span class="fc" id="L42">        Map&lt;String, String&gt; uriVariables = Map.of(&quot;category&quot;, category, &quot;numJokes&quot;, (numJokes));</span>
+
+<span class="fc" id="L44">        ResponseEntity&lt;String&gt; re = restTemplate.exchange(ENDPOINT, HttpMethod.GET, entity, String.class,</span>
+                uriVariables);
+<span class="fc" id="L46">        return re.getBody();    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
